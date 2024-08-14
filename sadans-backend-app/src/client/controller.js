@@ -15,6 +15,7 @@ const createClient = (req, res) => {
         (error, results) => {
           if (error) {
             console.error(error);
+            return res.send(error.detail);
           } else {
             res.status(201).send("Client added to database");
           }
