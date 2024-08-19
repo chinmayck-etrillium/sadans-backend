@@ -47,8 +47,21 @@ const totalRemainingCredit = (req, res) => {
   });
 };
 
+const showLastNTransaction = (req, res) => {
+  const id = parseInt(req.params.id);
+  const limit = req.params.limit;
+  pool.query(queries.showLastNTransaction, [id, limit], (error, results) => {
+    if (error) {
+      console.error("Error: ", error);
+    } else {
+      res.status(200).json(results.rows);
+    }
+  });
+};
+
 module.exports = {
   getAllTransactions,
   getTransactionsByName,
   totalRemainingCredit,
+  showLastNTransaction,
 };
