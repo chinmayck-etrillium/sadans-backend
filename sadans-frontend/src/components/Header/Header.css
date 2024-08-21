@@ -7,7 +7,7 @@
     /* Green background */
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: larger;
     font-weight: 600;
 }
@@ -53,4 +53,34 @@
     background-color: #4CAF50;
     border: #4CAF50;
     color: white;
+}
+
+.navbar-item.dropdown-item {
+    position: relative;
+    padding-right: 20px;
+}
+
+.navbar-item.dropdown-item::after {
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-20%) rotate(180deg);
+    /* Initial state: no rotation */
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent rgb(255, 255, 255) transparent;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+    /* Smooth transition for rotation */
+}
+
+/* Rotate arrow on hover or when dropdown is active */
+.navbar-item.dropdown-item:hover::after,
+.navbar-item.dropdown-item.active::after {
+    transform: translateY(-50%) rotate(180deg);
+    /* Rotate 180 degrees */
+    border-color: black transparent transparent transparent;
+    /* Inverted arrow color */
+    transition: transform 0.3s ease;
 }
