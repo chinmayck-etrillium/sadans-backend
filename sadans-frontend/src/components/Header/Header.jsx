@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Header.css";
 import Dropdown from "../Dropdown/Dropdown";
 import { example } from "../Dropdown/Example";
+import axios from "axios";
 
 export default function Header() {
   const [selectedOption, setSelectedOption] = useState();
@@ -9,9 +10,16 @@ export default function Header() {
   const handleDropdownChange = (value) => {
     console.log("Value: ", value);
     setSelectedOption(value);
-    
   };
-  console.log("navigated to",selectedOption)
+  console.log("navigated to", selectedOption);
+
+  async function handleExport() {
+    try {
+      await axios.get("http://localhost:3004/api/v1/export/csv");
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  }
 
   return (
     <header className="header">
@@ -24,6 +32,7 @@ export default function Header() {
             <Dropdown
               datas={example}
               propKey="name"
+              dropdownMenuTitle="EntityManager"
               onChange={(value) => handleDropdownChange(value)}
             />
           </li>
@@ -37,7 +46,7 @@ export default function Header() {
             <a href="#upcoming-credit">Upcoming Credit Collection (TBD)</a>
           </li>
           <li className="navbar-item">
-            <a href="#export-csv">Export as CSV</a>
+            <a href="" onClick={handleExport}>Export as CSV</a>
           </li>
           <li className="navbar-item">
             <a href="#help">Help</a>

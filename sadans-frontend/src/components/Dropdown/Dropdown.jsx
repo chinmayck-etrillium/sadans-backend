@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import './Dropdown.css';
 
-export default function Dropdown({ datas, propKey, onChange }) {
+export default function Dropdown({ datas, propKey, onChange, dropdownMenuTitle }) {
   const [valueChange, setValueChange] = useState(null);
 
   const handleChange = (event) => {
-    setValueChange(event.target.value);
+    setValueChange(event.target.getAttribute("value"));
   };
 
   useEffect(() => {
@@ -14,14 +15,15 @@ export default function Dropdown({ datas, propKey, onChange }) {
   }, [valueChange]);
 
   return (
-    <>
-      <select onChange={handleChange}>
+    <div className="dropdown-container">
+      <span>{dropdownMenuTitle}</span> {/* Trigger element */}
+      <ul className="dropdown">
         {datas.map((data, index) => (
-          <option key={index} value={data[propKey]}>
-            {data[propKey]}
-          </option>
+          <li key={index} value={data[propKey]} onClick={handleChange}>
+            <a href="#">{data[propKey]}</a>
+          </li>
         ))}
-      </select>
-    </>
+      </ul>
+    </div>
   );
 }
