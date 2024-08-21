@@ -6,6 +6,20 @@ import axios from "axios";
 
 export default function Header() {
   const [selectedOption, setSelectedOption] = useState();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      setScrolled(offset > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleDropdownChange = (value) => {
     console.log("Value: ", value);
@@ -22,7 +36,7 @@ export default function Header() {
   }
 
   return (
-    <header className="header">
+    <header className={`header ${scrolled ? "scrolled" : ""}`}>
       <div className="header-logo">
         <h1>Sadans-CrediLedger</h1>
       </div>
@@ -46,7 +60,9 @@ export default function Header() {
             <a href="#upcoming-credit">Upcoming Credit Collection (TBD)</a>
           </li>
           <li className="navbar-item">
-            <a href="" onClick={handleExport}>Export as CSV</a>
+            <a href="" onClick={handleExport}>
+              Export as CSV
+            </a>
           </li>
           <li className="navbar-item">
             <a href="#help">Help</a>
