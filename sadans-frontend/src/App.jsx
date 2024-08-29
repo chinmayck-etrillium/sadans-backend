@@ -1,14 +1,18 @@
-import { useState } from "react";
-import Dropdown from "./components/Dropdown/Dropdown";
-import { example } from "./components/Dropdown/Example";
-import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import GetTransactionDetails from "./components/GetTransactionDetails/GetTransactionDetails";
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="get-transaction" element={<GetTransactionDetails />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
