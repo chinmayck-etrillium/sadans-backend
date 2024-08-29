@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const controller = require("./controller");
 const getController = require("./getControllers/getControllers");
+const postController = require("./postControllers/postControllers");
+const putController = require("./putControllers/putControllers");
 
 /**
  * @swagger
@@ -174,11 +175,11 @@ router.get("/:id/limit/:limit", getController.showLastNTransaction);
  *
  */
 
-router.post("/:name", controller.addTransactionByName);
+router.post("/:name", postController.addTransactionByName);
 
 /**
  * @swagger
- * /api/v1/transactions/{id}:
+ * /api/v1/transactions/amount/{id}:
  *   put:
  *     summary: Create a new transaction
  *     tags: [Transactions]
@@ -205,6 +206,99 @@ router.post("/:name", controller.addTransactionByName);
  *
  *
  */
-router.put("/:id", controller.editAmountById);
+router.put("/amount/:id", putController.editAmountById);
+
+/**
+ * @swagger
+ * /api/v1/transactions/type/{id}:
+ *   put:
+ *     summary: Create a new transaction
+ *     tags: [Transactions]
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *                 description: The type of the transaction.
+ *             required:
+ *               - type
+ *           example:
+ *             type: Credit
+ *     responses:
+ *       200:
+ *         description: Transaction updated successfully.
+ *
+ *
+ */
+router.put("/type/:id", putController.editTypeById);
+
+/**
+ * @swagger
+ * /api/v1/transactions/notes/{id}:
+ *   put:
+ *     summary: Create a new transaction
+ *     tags: [Transactions]
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               notes:
+ *                 type: string
+ *                 description: The notes for the transaction.
+ *             required:
+ *               - notes
+ *           example:
+ *             notes: "Repayment by cash"
+ *     responses:
+ *       200:
+ *         description: Transaction updated successfully.
+ *
+ *
+ */
+router.put("/notes/:id", putController.editNotesById);
+
+/**
+ * @swagger
+ * /api/v1/transactions/created-at/{id}:
+ *   put:
+ *     summary: Create a new transaction
+ *     tags: [Transactions]
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               created_at:
+ *                 type: date
+ *                 description: The date and time of the transaction
+ *             required:
+ *               - created_at
+ *           example:
+ *             created_at: "2024-08-29 22:05:45.293877+05:30"
+ *     responses:
+ *       200:
+ *         description: Transaction updated successfully.
+ *
+ *
+ */
+router.put("/created-at/:id", putController.editCreatedAtById);
 
 module.exports = router;
