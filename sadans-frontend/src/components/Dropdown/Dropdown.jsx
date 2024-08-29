@@ -20,7 +20,7 @@ export default function Dropdown({ datas, propKey, onChange, dropdownMenuTitle }
       <ul className="dropdown">
         {datas.map((data, index) => (
           <li key={index} value={data[propKey]} onClick={handleChange}>
-            <a href="#">{data[propKey]}</a>
+            <a href={data[propKey]}>{data[propKey]}</a>
           </li>
         ))}
       </ul>

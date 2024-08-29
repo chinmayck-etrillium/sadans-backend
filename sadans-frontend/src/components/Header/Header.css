@@ -9,7 +9,7 @@
     align-items: center;
     padding: 10px 30px;
     background-color: #2F3C7E;
-    color: #FBEAEB;
+    color: #edefff;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -42,7 +42,7 @@
 
 .navbar-item a {
     text-decoration: none;
-    color: #FBEAEB;
+    color: #edefff;
     font-size: 14px;
     transition: color 0.3s;
 }

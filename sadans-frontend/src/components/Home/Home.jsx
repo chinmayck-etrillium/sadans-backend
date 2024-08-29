@@ -6,7 +6,10 @@ export default function Home() {
     <>
       <Header />
       <Hero>
-        <h3 className="welcome" style={{color:"#rgb(13 24 78)"}}>Welcome Janesh!</h3>
+        <h3 className="welcome" style={{ color: "rgb(13 24 78)" }}>
+          Welcome Janesh!
+          <br />
+        </h3>
       </Hero>
     </>
   );

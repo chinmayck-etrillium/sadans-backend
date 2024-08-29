@@ -3,6 +3,7 @@ import "./Header.css";
 import Dropdown from "../Dropdown/Dropdown";
 import { example } from "../Dropdown/Example";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [selectedOption, setSelectedOption] = useState();
@@ -25,11 +26,11 @@ export default function Header() {
     console.log("Value: ", value);
     setSelectedOption(value);
   };
-  console.log("navigated to", selectedOption);
 
   async function handleExport() {
     try {
       await axios.get("http://localhost:3004/api/v1/export/csv");
+      await axios.get("http://localhost:3004/api/v1/export/csv/clients");
     } catch (err) {
       console.log("Error: ", err);
     }
@@ -38,7 +39,9 @@ export default function Header() {
   return (
     <header className={`header ${scrolled ? "scrolled" : ""}`}>
       <div className="header-logo">
-        <h1>Sadans-CrediLedger</h1>
+        <Link to="/" style={{ textDecoration: "none", color: "#edefff" }}>
+          <h1>Sadans-CrediLedger</h1>
+        </Link>
       </div>
       <nav className="navbar">
         <ul className="navbar-list">
@@ -54,13 +57,13 @@ export default function Header() {
             <a href="#new-transaction">New Transaction</a>
           </li>
           <li className="navbar-item">
-            <a href="#get-transaction-details">Get Transaction Details</a>
+            <Link to="get-transaction">Get Transaction Details</Link>
           </li>
           <li className="navbar-item">
             <a href="#upcoming-credit">Upcoming Credit Collection (TBD)</a>
           </li>
           <li className="navbar-item">
-            <a href="" onClick={handleExport}>
+            <a href="#eghdh" onClick={handleExport}>
               Export as CSV
             </a>
           </li>

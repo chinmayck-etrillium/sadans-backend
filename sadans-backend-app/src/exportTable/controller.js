@@ -16,7 +16,9 @@ const selectClientsTable = async (req, res) => {
 
     pool.query(queries.selectClientsTable, (error, results) => {
       if (error) {
-        console.error("Error: ", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+      } else if (results.rows.length === 0) {
+        return res.status(404).json({ message: "Table not found!" });
       } else {
         fastcsv
           .write(results.rows, { headers: true })
@@ -24,7 +26,9 @@ const selectClientsTable = async (req, res) => {
             console.log(`Successfully exported ${tableName}`);
           })
           .pipe(ws);
-        res.status(200).send("Success");
+        return res
+          .status(200)
+          .json({ message: "Successfully exported ${tableName}!" });
       }
     });
   } catch (err) {
@@ -43,7 +47,9 @@ const selectTransactionsTable = async (req, res) => {
 
     pool.query(queries.selectTransactionsTable, (error, results) => {
       if (error) {
-        console.error("Error: ", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+      } else if (results.rows.length === 0) {
+        return res.status(404).json({ message: "Table not found!" });
       } else {
         fastcsv
           .write(results.rows, { headers: true })
@@ -51,11 +57,11 @@ const selectTransactionsTable = async (req, res) => {
             console.log(`Successfully exported ${tableName}`);
           })
           .pipe(ws);
-        res.status(200).send("Success");
+        return res.status(200).send("Success");
       }
     });
   } catch (err) {
-    console.log("Error: ", err);
+    return console.log("Error: ", err);
   }
 };
 
