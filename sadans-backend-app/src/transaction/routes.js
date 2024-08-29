@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const controller = require("./controller");
+const getController = require("./getControllers/getControllers");
 
 /**
  * @swagger
@@ -25,6 +26,9 @@ const controller = require("./controller");
  *         notes:
  *           type: string
  *           description: Short description of the transaction
+ *         created_at:
+ *           type: date
+ *           description: Date when transaction was created
  *       example:
  *         type: "Credit"
  *         amount: 100.00
@@ -49,7 +53,7 @@ const controller = require("./controller");
  *               items:
  *                 $ref: '#/components/schemas/Transaction'
  */
-router.get("/", controller.getAllTransactions);
+router.get("/", getController.getAllTransactions);
 
 /**
  * @swagger
@@ -77,7 +81,7 @@ router.get("/", controller.getAllTransactions);
  *       400:
  *          description: Transaction for the client not found!
  */
-router.get("/:name", controller.getTransactionsByName);
+router.get("/:name", getController.getTransactionsByName);
 
 /**
  * @swagger
@@ -100,7 +104,7 @@ router.get("/:name", controller.getTransactionsByName);
  *       400:
  *          description: Transaction for the client not found!
  */
-router.get("/total-credit/:name", controller.totalRemainingCredit);
+router.get("/total-credit/:name", getController.totalRemainingCredit);
 
 /**
  * @swagger
@@ -121,7 +125,7 @@ router.get("/total-credit/:name", controller.totalRemainingCredit);
  *           application/json:
  *             schema:
  *               type: array
- *               example: 
+ *               example:
  *                      type: "Credit"
  *                      amount: 100.00
  *                      notes: "Sales Credit"
@@ -129,6 +133,78 @@ router.get("/total-credit/:name", controller.totalRemainingCredit);
  *       400:
  *          description: Transaction for the client not found!
  */
-router.get("/:id/limit/:limit", controller.showLastNTransaction);
+router.get("/:id/limit/:limit", getController.showLastNTransaction);
+
+/**
+ * @swagger
+ * /api/v1/transactions/{name}:
+ *   post:
+ *     summary: Create a new transaction
+ *     tags: [Transactions]
+ *     parameters:
+ *          - in: path
+ *            name: name
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *                 description: The type of transaction (e.g., Credit, Debit, Repayment, Misc.)
+ *               amount:
+ *                 type: number
+ *                 description: The amount for the transaction
+ *               notes:
+ *                 type: string
+ *                 description: Short description of the transaction
+ *             required:
+ *               - type
+ *               - amount
+ *           example:
+ *             type: "Credit"
+ *             amount: 65000
+ *             notes: "Oil"
+ *     responses:
+ *       201:
+ *         description: Transaction created successfully.
+ *
+ *
+ */
+
+router.post("/:name", controller.addTransactionByName);
+
+/**
+ * @swagger
+ * /api/v1/transactions/{id}:
+ *   put:
+ *     summary: Create a new transaction
+ *     tags: [Transactions]
+ *     parameters:
+ *          - in: path
+ *            name: id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               amount:
+ *                 type: number
+ *                 description: The amount for the transaction
+ *             required:
+ *               - amount
+ *           example:
+ *             amount: 65000
+ *     responses:
+ *       200:
+ *         description: Transaction updated successfully.
+ *
+ *
+ */
+router.put("/:id", controller.editAmountById);
 
 module.exports = router;

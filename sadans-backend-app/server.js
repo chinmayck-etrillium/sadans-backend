@@ -12,7 +12,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Library API",
+      title: "Sadans Api Library",
       version: "1.0.0",
       description: "Sadan's Credi-Ledger Api's",
     },
