@@ -2,6 +2,7 @@ import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import GetTransactionDetails from "./components/GetTransactionDetails/GetTransactionDetails";
+import NewTransaction from "./components/NewTransaction/NewTransaction";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="get-transaction" element={<GetTransactionDetails />} />
+          <Route path="new-transaction" element={<NewTransaction />} />
         </Route>
       </Routes>
     </BrowserRouter>

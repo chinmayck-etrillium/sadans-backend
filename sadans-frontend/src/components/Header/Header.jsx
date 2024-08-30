@@ -54,7 +54,7 @@ export default function Header() {
             />
           </li>
           <li className="navbar-item">
-            <a href="#new-transaction">New Transaction</a>
+            <Link to="new-transaction">New Transaction</Link>
           </li>
           <li className="navbar-item">
             <Link to="get-transaction">Get Transaction Details</Link>

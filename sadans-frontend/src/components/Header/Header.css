@@ -3,7 +3,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Set your header height here */
+    height: 60px;
+    /* Set your header height here */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,8 +15,8 @@
     font-size: 14px;
     font-weight: 600;
     transition: box-shadow 0.3s ease;
-    z-index: 1000;
-   
+
+
 }
 
 .header-logo h1 {
@@ -64,7 +65,7 @@
 .navbar-item.dropdown-item {
     position: relative;
     padding-right: 20px;
-    
+
 }
 
 
