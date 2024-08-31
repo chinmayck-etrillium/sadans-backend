@@ -40,6 +40,20 @@ const getAllClients = (req, res) => {
   });
 };
 
+//Get client ID from name
+const getClientIdByName = (req, res) => {
+  const name = req.params.name;
+  pool.query(queries.getClientIdByName, [name], (error, results) => {
+    if (error) {
+      return res.status(500).send("Internal server error!");
+    } else if (results.rows.length <= 0) {
+      return res.status(404).send("Client not found!");
+    } else {
+      return res.status(200).send(results.rows);
+    }
+  });
+};
+
 //Update client name
 
 const updateClientName = (req, res) => {
@@ -93,6 +107,7 @@ const deleteClient = (req, res) => {
 
 module.exports = {
   getAllClients,
+  getClientIdByName,
   createClient,
   updateClientName,
   deleteClient,

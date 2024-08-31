@@ -1,0 +1,36 @@
+.get-transaction-details {
+    width: 100%;
+}
+
+.transaction-number {
+    width: 100%;
+    /* Full width for inputs */
+    padding: 10px;
+    /* Padding inside inputs */
+    margin-bottom: 20px;
+    /* Space below inputs */
+    border: 1px solid #ddd;
+    /* Light border */
+    border-radius: 5px;
+    /* Rounded corners */
+    background-color: #fff;
+    /* Input background */
+    font-size: 16px;
+    /* Input font size */
+    color: #555;
+    /* Input text color */
+    box-sizing: border-box;
+    /* Include padding in width */
+}
+
+.transaction-search-btn {
+    display: block;
+    margin: 10px auto;
+}
+
+.enter-transaction-number {
+    color: crimson;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    text-align: center;
+}
