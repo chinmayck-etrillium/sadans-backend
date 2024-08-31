@@ -4,6 +4,7 @@ const router = express.Router();
 const getController = require("./getControllers/getControllers");
 const postController = require("./postControllers/postControllers");
 const putController = require("./putControllers/putControllers");
+const deleteController = require("./deleteControllers/deleteControllers");
 
 /**
  * @swagger
@@ -300,5 +301,7 @@ router.put("/notes/:id", putController.editNotesById);
  *
  */
 router.put("/created-at/:id", putController.editCreatedAtById);
+
+router.delete("/:id", deleteController.deleteTransactionById);
 
 module.exports = router;

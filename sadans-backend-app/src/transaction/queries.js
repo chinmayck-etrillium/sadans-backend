@@ -20,6 +20,9 @@ const editNotesById = "UPDATE transaction SET notes = $1 WHERE id = $2";
 const editCreatedAtById =
   "UPDATE transaction SET created_at = $1 WHERE id = $2";
 
+//[DELETE]
+const deleteTransactionById = "DELETE FROM transaction WHERE id = $1";
+
 module.exports = {
   getAllTransactions,
   getTransactionsIdByName,
@@ -31,4 +34,5 @@ module.exports = {
   editCreatedAtById,
   editNotesById,
   editTypeById,
+  deleteTransactionById,
 };
