@@ -49,12 +49,13 @@ export default function Header() {
             <Dropdown
               datas={example}
               propKey="name"
+              propHref="path"
               dropdownMenuTitle="EntityManager"
               onChange={(value) => handleDropdownChange(value)}
             />
           </li>
           <li className="navbar-item">
-            <a href="#new-transaction">New Transaction</a>
+            <Link to="new-transaction">New Transaction</Link>
           </li>
           <li className="navbar-item">
             <Link to="get-transaction">Get Transaction Details</Link>

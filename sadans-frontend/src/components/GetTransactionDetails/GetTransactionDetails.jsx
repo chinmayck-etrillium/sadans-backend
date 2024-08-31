@@ -1,10 +1,22 @@
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import "./GetTransactionDetails.css";
+import { GetClientNameContext } from "../../store/GetClientNameContext/GetClientNameContext";
 
 export default function GetTransactionDetails() {
   const [transactionDetails, setTransactionDetails] = useState(null);
   const [name, setName] = useState();
+  const [clientName, setClientName] = useState();
+  const { getClientNames } = useContext(GetClientNameContext);
+
+  useEffect(() => {
+    const getNamesFromContext = async () => {
+      const clientNamess = await getClientNames();
+      setClientName(clientNamess.data);
+      setName(clientNamess.data[0].client_name);
+    };
+    getNamesFromContext();
+  }, []);
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -24,9 +36,19 @@ export default function GetTransactionDetails() {
   };
   return (
     <div className="get-transaction-details">
-      <label >Name:</label>
-      <input type="text" onChange={handleChange} />
+      <label>Client Name:</label>
+      {clientName && (
+        <select onChange={handleChange}>
+          {clientName.map((name, index) => (
+            <option value={name.client_name} key={index}>
+              {name.client_name}
+            </option>
+          ))}
+        </select>
+      )}
       <button onClick={handleClick}>Search!</button>
+      <br />
+      <br />
       <hr />
       {transactionDetails && (
         <div>
