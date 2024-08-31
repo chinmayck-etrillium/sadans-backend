@@ -7,6 +7,7 @@ export default function NewTransaction() {
   const [formData, setFormData] = useState({ type: "Credit" });
   const [clientName, setClientName] = useState();
   const { getClientNames } = useContext(GetClientNameContext);
+  const [dbUpdated, setDbUpdated] = useState(false);
 
   useEffect(() => {
     const getNamesFromContext = async () => {
@@ -22,6 +23,7 @@ export default function NewTransaction() {
 
   const handleOptionChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setDbUpdated(false);
   };
 
   const handleSubmit = async (e) => {
@@ -34,7 +36,7 @@ export default function NewTransaction() {
           "Content-Type": "application/json",
         },
       });
-      console.log(response.data);
+      setDbUpdated(true);
     } catch (err) {
       console.log("Error :", err);
     }
@@ -71,6 +73,10 @@ export default function NewTransaction() {
         <input type="text" name="notes" onChange={handleOptionChange} />
         <button type="submit">Add Transaction</button>
       </form>
+      <br />
+      {dbUpdated && (
+        <p className="transaction-status">New Transaction Record Added!</p>
+      )}
     </div>
   );
 }

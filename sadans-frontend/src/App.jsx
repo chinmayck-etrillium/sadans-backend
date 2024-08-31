@@ -4,6 +4,7 @@ import Layout from "./components/Layout/Layout";
 import GetTransactionDetails from "./components/GetTransactionDetails/GetTransactionDetails";
 import NewTransaction from "./components/NewTransaction/NewTransaction";
 import GetClientNameContextProvider from "./store/GetClientNameContext/GetClientNameContext";
+import AddNewClient from "./components/AddNewClient/AddNewClient";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               </GetClientNameContextProvider>
             }
           />
+          <Route path="add-client" element={<AddNewClient />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

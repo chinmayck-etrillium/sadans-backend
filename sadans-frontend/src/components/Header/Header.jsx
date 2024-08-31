@@ -49,6 +49,7 @@ export default function Header() {
             <Dropdown
               datas={example}
               propKey="name"
+              propHref="path"
               dropdownMenuTitle="EntityManager"
               onChange={(value) => handleDropdownChange(value)}
             />

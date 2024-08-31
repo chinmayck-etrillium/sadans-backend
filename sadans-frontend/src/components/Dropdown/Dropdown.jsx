@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import './Dropdown.css';
+import "./Dropdown.css";
 
-export default function Dropdown({ datas, propKey, onChange, dropdownMenuTitle }) {
+export default function Dropdown({
+  datas,
+  propKey,
+  propHref,
+  onChange,
+  dropdownMenuTitle,
+}) {
   const [valueChange, setValueChange] = useState(null);
 
   const handleChange = (event) => {
@@ -20,7 +26,7 @@ export default function Dropdown({ datas, propKey, onChange, dropdownMenuTitle }
       <ul className="dropdown">
         {datas.map((data, index) => (
           <li key={index} value={data[propKey]} onClick={handleChange}>
-            <a href={data[propKey]}>{data[propKey]}</a>
+            <a href={data[propHref]}>{data[propKey]}</a>
           </li>
         ))}
       </ul>
