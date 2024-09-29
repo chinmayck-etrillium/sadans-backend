@@ -8,6 +8,9 @@ export default function GetTransactionDetails() {
   const [name, setName] = useState();
   const [clientName, setClientName] = useState();
   const { getClientNames } = useContext(GetClientNameContext);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [flag, setFlag] = useState(true);
 
   useEffect(() => {
     const getNamesFromContext = async () => {
@@ -17,6 +20,19 @@ export default function GetTransactionDetails() {
     };
     getNamesFromContext();
   }, []);
+
+  useEffect(() => {
+    if (flag) {
+      if (searchInput.trim() === "") {
+        setFilteredClients([]);
+      } else {
+        const filtered = clientName.filter((client) =>
+          client.client_name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+        setFilteredClients(filtered);
+      }
+    }
+  }, [searchInput, clientName]);
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -34,6 +50,21 @@ export default function GetTransactionDetails() {
       console.error(err);
     }
   };
+
+  const handleNameChange = (event) =>{
+    setSearchInput(event.target.value)
+    setFlag(true)
+
+  }
+
+  const handleClientClick = (client) => {
+    setSearchInput(client.client_name);
+    setFlag(false)
+    setFilteredClients([]);
+  };
+
+
+
   return (
     <div className="get-transaction-details">
       <label>Client Name:</label>
@@ -77,6 +108,29 @@ export default function GetTransactionDetails() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+      {clientName && (
+        <div>
+          <input
+            type="text"
+            value={searchInput}
+            onChange={handleNameChange}
+            placeholder="Search clients..."
+          />
+          {filteredClients.length > 0 && (
+            <ul>
+              {filteredClients.map((client, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleClientClick(client)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {client.client_name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>
