@@ -34,10 +34,6 @@ export default function GetTransactionDetails() {
     }
   }, [searchInput, clientName]);
 
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
   const handleClick = async () => {
     try {
       const response = await axios.get(
@@ -51,31 +47,44 @@ export default function GetTransactionDetails() {
     }
   };
 
-  const handleNameChange = (event) =>{
-    setSearchInput(event.target.value)
-    setFlag(true)
-
-  }
-
-  const handleClientClick = (client) => {
-    setSearchInput(client.client_name);
-    setFlag(false)
-    setFilteredClients([]);
+  const handleNameChange = (event) => {
+    setSearchInput(event.target.value);
+    setFlag(true);
   };
 
-
+  // handle rendered client list click
+  const handleClientClick = (client) => {
+    setSearchInput(client.client_name);
+    setName(client.client_name);
+    setFlag(false);
+    setFilteredClients([]);
+  };
 
   return (
     <div className="get-transaction-details">
       <label>Client Name:</label>
       {clientName && (
-        <select onChange={handleChange}>
-          {clientName.map((name, index) => (
-            <option value={name.client_name} key={index}>
-              {name.client_name}
-            </option>
-          ))}
-        </select>
+        <div className="search-client">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={handleNameChange}
+            placeholder="Search clients..."
+          />
+          {filteredClients.length > 0 && (
+            <ul className="filtered-clients-ul">
+              {filteredClients.map((client, index) => (
+                <li className="filtered-clients-list"
+                  key={index}
+                  onClick={() => handleClientClick(client)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {client.client_name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
       <button onClick={handleClick}>Search!</button>
       <br />
@@ -108,29 +117,6 @@ export default function GetTransactionDetails() {
               ))}
             </tbody>
           </table>
-        </div>
-      )}
-      {clientName && (
-        <div>
-          <input
-            type="text"
-            value={searchInput}
-            onChange={handleNameChange}
-            placeholder="Search clients..."
-          />
-          {filteredClients.length > 0 && (
-            <ul>
-              {filteredClients.map((client, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleClientClick(client)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {client.client_name}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
       )}
     </div>

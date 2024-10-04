@@ -5,6 +5,7 @@ import GetTransactionDetails from "./components/GetTransactionDetails/GetTransac
 import NewTransaction from "./components/NewTransaction/NewTransaction";
 import GetClientNameContextProvider from "./store/GetClientNameContext/GetClientNameContext";
 import AddNewClient from "./components/AddNewClient/AddNewClient";
+import DeleteTransaction from "./components/DeleteTransaction/DeleteTransaction";
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
             }
           />
           <Route path="add-client" element={<AddNewClient />}></Route>
+          <Route
+            path="delete-transaction"
+            element={<DeleteTransaction />}
+          ></Route>
         </Route>
       </Routes>
     </BrowserRouter>

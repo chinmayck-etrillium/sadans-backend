@@ -1,10 +1,5 @@
 import DeleteTransactionFromTransactionIdContextProvider from "../../store/DeleteTransactionFromTransactionIdContext/DeleteTransactionFromTransactionIdContext";
-import GetClientIdFromNameContextProvider from "../../store/GetClientIdFromNameContext/GetClientIdFromNameContext";
-import GetClientNameContextProvider from "../../store/GetClientNameContext/GetClientNameContext";
-import GetLastNTransactionContextProvider from "../../store/GetLastNTransactionContext/GetLastNTransactionContext";
 import DeleteTransaction from "../DeleteTransaction/DeleteTransaction";
-import GetLastNTransaction from "../GetLastNTransaction/GetLastNTransaction";
-import Test from "../GetTransactionDetails/Test";
 import Header from "../Header/Header";
 import Hero from "../Hero/Hero";
 
@@ -17,13 +12,6 @@ export default function Home() {
           Welcome Janesh!
           <br />
         </h3>
-        <GetClientNameContextProvider>
-          <GetClientIdFromNameContextProvider>
-            <GetLastNTransactionContextProvider>
-              <GetLastNTransaction />
-            </GetLastNTransactionContextProvider>
-          </GetClientIdFromNameContextProvider>
-        </GetClientNameContextProvider>
         <hr />
         <br />
         <br />
@@ -31,9 +19,6 @@ export default function Home() {
           <DeleteTransaction />
         </DeleteTransactionFromTransactionIdContextProvider>
       </Hero>
-      <GetClientNameContextProvider>
-      <Test/>
-      </GetClientNameContextProvider>
     </>
   );
 }

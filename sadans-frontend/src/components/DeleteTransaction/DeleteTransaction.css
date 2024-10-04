@@ -1,4 +1,5 @@
 .delete-transaction-main-container {
+    margin-top: 90px;
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;

@@ -5,7 +5,6 @@ export default function Dropdown({
   datas,
   propKey,
   propHref,
-  onChange,
   dropdownMenuTitle,
 }) {
   const [valueChange, setValueChange] = useState(null);
@@ -14,15 +13,11 @@ export default function Dropdown({
     setValueChange(event.target.getAttribute("value"));
   };
 
-  useEffect(() => {
-    if (valueChange) {
-      onChange(valueChange);
-    }
-  }, [valueChange]);
+
 
   return (
     <div className="dropdown-container">
-      <span>{dropdownMenuTitle}</span> {/* Trigger element */}
+      <span>{dropdownMenuTitle}</span> 
       <ul className="dropdown">
         {datas.map((data, index) => (
           <li key={index} value={data[propKey]} onClick={handleChange}>

@@ -22,10 +22,6 @@ export default function Header() {
     };
   }, []);
 
-  const handleDropdownChange = (value) => {
-    console.log("Value: ", value);
-    setSelectedOption(value);
-  };
 
   async function handleExport() {
     try {
@@ -51,7 +47,6 @@ export default function Header() {
               propKey="name"
               propHref="path"
               dropdownMenuTitle="EntityManager"
-              onChange={(value) => handleDropdownChange(value)}
             />
           </li>
           <li className="navbar-item">
