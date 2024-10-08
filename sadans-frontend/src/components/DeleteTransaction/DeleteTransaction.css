@@ -1,0 +1,39 @@
+.delete-transaction-main-container {
+    margin-top: 90px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-transaction-main-container button {
+    width: 90px;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #db0909;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+
+}
+
+.delete-transaction-main-container button:hover {
+    background-color: #ff6d6d;
+}
+
+.transaction-deleted-message {
+    margin: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    color: crimson;
+    font-weight: 600;
+    font-size: medium;
+    text-align: center;
+}
+
+.label-container {
+    padding: 10px;
+    font-weight: 600;
+}

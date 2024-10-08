@@ -8,6 +8,10 @@ export default function NewTransaction() {
   const [clientName, setClientName] = useState();
   const { getClientNames } = useContext(GetClientNameContext);
   const [dbUpdated, setDbUpdated] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [flag, setFlag] = useState(true);
+
 
   useEffect(() => {
     const getNamesFromContext = async () => {
@@ -20,6 +24,33 @@ export default function NewTransaction() {
     };
     getNamesFromContext();
   }, []);
+
+  useEffect(() => {
+    if (flag) {
+      if (searchInput.trim() === "") {
+        setFilteredClients([]);
+      } else {
+        const filtered = clientName.filter((client) =>
+          client.client_name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+        setFilteredClients(filtered);
+      }
+    }
+  }, [searchInput, clientName]);
+
+  const handleNameChange = (event) => {
+    setSearchInput(event.target.value);
+    setFlag(true);
+  };
+
+   const handleClientClick = (e,client) => {
+    setFormData((prev) => ({ ...prev, ['name']: client.client_name }));
+    setSearchInput(client.client_name);
+    console.log(filteredClients)
+    setFlag(false);
+    setFilteredClients([]);
+  };
+
 
   const handleOptionChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -50,14 +81,29 @@ export default function NewTransaction() {
         <hr />
         <label>Client Name:</label>
         {clientName && (
-          <select name="name" onChange={handleOptionChange}>
-            {clientName.map((name, index) => (
-              <option value={name.client_name} key={index}>
-                {name.client_name}
-              </option>
-            ))}
-          </select>
-        )}
+        <div className="search-client">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={handleNameChange}
+            placeholder="Search clients..."
+          />
+          {filteredClients.length > 0 && (
+            <ul className="filtered-clients-ul">
+              {filteredClients.map((client, index) => (
+          
+                <li className="filtered-clients-list"
+                  key={index}
+                  onClick={(e) => handleClientClick(e,client)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {client.client_name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
         <label>Type of transaction</label>
         <select name="type" onChange={handleOptionChange}>
           <option value="Credit">Credit</option>

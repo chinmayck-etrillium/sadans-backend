@@ -8,6 +8,9 @@ export default function GetTransactionDetails() {
   const [name, setName] = useState();
   const [clientName, setClientName] = useState();
   const { getClientNames } = useContext(GetClientNameContext);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [flag, setFlag] = useState(true);
 
   useEffect(() => {
     const getNamesFromContext = async () => {
@@ -18,9 +21,18 @@ export default function GetTransactionDetails() {
     getNamesFromContext();
   }, []);
 
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
+  useEffect(() => {
+    if (flag) {
+      if (searchInput.trim() === "") {
+        setFilteredClients([]);
+      } else {
+        const filtered = clientName.filter((client) =>
+          client.client_name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+        setFilteredClients(filtered);
+      }
+    }
+  }, [searchInput, clientName]);
 
   const handleClick = async () => {
     try {
@@ -34,17 +46,45 @@ export default function GetTransactionDetails() {
       console.error(err);
     }
   };
+
+  const handleNameChange = (event) => {
+    setSearchInput(event.target.value);
+    setFlag(true);
+  };
+
+  // handle rendered client list click
+  const handleClientClick = (client) => {
+    setSearchInput(client.client_name);
+    setName(client.client_name);
+    setFlag(false);
+    setFilteredClients([]);
+  };
+
   return (
     <div className="get-transaction-details">
       <label>Client Name:</label>
       {clientName && (
-        <select onChange={handleChange}>
-          {clientName.map((name, index) => (
-            <option value={name.client_name} key={index}>
-              {name.client_name}
-            </option>
-          ))}
-        </select>
+        <div className="search-client">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={handleNameChange}
+            placeholder="Search clients..."
+          />
+          {filteredClients.length > 0 && (
+            <ul className="filtered-clients-ul">
+              {filteredClients.map((client, index) => (
+                <li className="filtered-clients-list"
+                  key={index}
+                  onClick={() => handleClientClick(client)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {client.client_name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
       <button onClick={handleClick}>Search!</button>
       <br />
