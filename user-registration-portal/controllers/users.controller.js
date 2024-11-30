@@ -1,4 +1,3 @@
-// const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/users.model");
@@ -46,6 +45,7 @@ const loginUser = async (req, res) => {
     const payload = {
       user: {
         id: user.id,
+        userId: user.userId,
       },
     };
 
@@ -63,7 +63,12 @@ const loginUser = async (req, res) => {
 //show user name
 
 const showUserName = async (req, res) => {
-  res.send("Hello");
+  console.log(req.user);
+  if (req.user) {
+    return res.send(`Logged is with userId: ${req.user.user.userId}`);
+  } else {
+    return res.send("Please login to continue");
+  }
 };
 
 module.exports = {
