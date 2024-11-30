@@ -6,20 +6,36 @@ import NewTransaction from "./components/NewTransaction/NewTransaction";
 import GetClientNameContextProvider from "./store/GetClientNameContext/GetClientNameContext";
 import AddNewClient from "./components/AddNewClient/AddNewClient";
 import DeleteTransaction from "./components/DeleteTransaction/DeleteTransaction";
+import Login from "./components/Login/Login";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import GetLastNTransactionContextProvider from "./store/GetLastNTransactionContext/GetLastNTransactionContext";
+import GetClientIdFromNameContextProvider from "./store/GetClientIdFromNameContext/GetClientIdFromNameContext";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
 
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Home />} />
           <Route
             path="get-transaction"
             element={
-              <GetClientNameContextProvider>
-                <GetTransactionDetails />
-              </GetClientNameContextProvider>
+              <GetLastNTransactionContextProvider>
+                <GetClientIdFromNameContextProvider>
+                  <GetClientNameContextProvider>
+                    <GetTransactionDetails />
+                  </GetClientNameContextProvider>
+                </GetClientIdFromNameContextProvider>
+              </GetLastNTransactionContextProvider>
             }
           />
           <Route
@@ -30,11 +46,8 @@ function App() {
               </GetClientNameContextProvider>
             }
           />
-          <Route path="add-client" element={<AddNewClient />}></Route>
-          <Route
-            path="delete-transaction"
-            element={<DeleteTransaction />}
-          ></Route>
+          <Route path="add-client" element={<AddNewClient />} />
+          <Route path="delete-transaction" element={<DeleteTransaction />} />
         </Route>
       </Routes>
     </BrowserRouter>
