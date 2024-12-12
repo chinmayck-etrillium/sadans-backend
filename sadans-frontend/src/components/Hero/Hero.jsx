@@ -2,28 +2,18 @@ import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <div className="relative bg-white overflow-hidden">
+    <div className="relative bg-white overflow-hidden min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-          <svg
-            className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-            fill="currentColor"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <polygon points="50,0 100,0 50,100 0,100" />
-          </svg>
-
+        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:w-1/2 lg:pb-28 xl:pb-32">
           <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="sm:text-center lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Manage your credits</span>{' '}
-                <span className="block text-primary-600 xl:inline">efficiently</span>
+              <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
+                <span className="block">Sadans Analytics</span>
+                <span className="block text-primary-600">Dashboard</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Track, manage, and analyze your credit transactions with ease. 
-                CrediLedger helps you maintain accurate records and make informed decisions.
+                Get instant insights into your credit operations. Monitor top clients, 
+                track outstanding amounts, and analyze credit patterns.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
@@ -48,31 +38,56 @@ export default function Hero() {
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <div className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full bg-gradient-to-r from-primary-50 to-primary-100 flex items-center justify-center">
-          <div className="text-center p-8">
-            <div className="flex justify-center mb-8">
-              <svg 
-                className="w-24 h-24 text-primary-600" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div className="p-4 bg-white rounded-lg shadow">
-                <h3 className="text-2xl font-bold text-primary-600">500+</h3>
-                <p className="text-gray-600">Transactions</p>
+        <div className="h-full w-full bg-white p-6 overflow-y-auto" style={{ maxHeight: "100vh" }}>
+          <div className="flex flex-col space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-primary-50 p-4 rounded-lg shadow-sm">
+                <h3 className="text-lg font-bold text-primary-900">Total Credit</h3>
+                <p className="text-3xl font-bold text-primary-700">₹15.2M</p>
+                <p className="text-sm text-primary-600">+12% from last month</p>
               </div>
-              <div className="p-4 bg-white rounded-lg shadow">
-                <h3 className="text-2xl font-bold text-primary-600">100+</h3>
-                <p className="text-gray-600">Clients</p>
+              <div className="bg-primary-50 p-4 rounded-lg shadow-sm">
+                <h3 className="text-lg font-semibold text-primary-900">Active Clients</h3>
+                <p className="text-3xl font-bold text-primary-700">142</p>
+                <p className="text-sm text-primary-600">+8 new this month</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg">
+              <h3 className="text-lg font-semibold mb-4 text-gray-900">Top Credit Holders</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
+                  <div>
+                    <p className="font-semibold text-gray-900">Rajesh Traders</p>
+                    <p className="text-sm text-gray-500">Last transaction: 2 days ago</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-primary-600">₹2.8M</p>
+                    <p className="text-sm text-gray-500">Outstanding</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
+                  <div>
+                    <p className="font-semibold text-gray-900">SK Enterprises</p>
+                    <p className="text-sm text-gray-500">Last transaction: Today</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-primary-600">₹1.5M</p>
+                    <p className="text-sm text-gray-500">Outstanding</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
+                  <div>
+                    <p className="font-semibold text-gray-900">Metro Distributors</p>
+                    <p className="text-sm text-gray-500">Last transaction: 1 week ago</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-primary-600">₹980K</p>
+                    <p className="text-sm text-gray-500">Outstanding</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
