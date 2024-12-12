@@ -12,8 +12,8 @@ export default function Hero() {
                 <span className="block text-primary-600">Dashboard</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Get instant insights into your credit operations. Monitor top clients, 
-                track outstanding amounts, and analyze credit patterns.
+                Get instant insights into your credit operations. Monitor top
+                clients, track outstanding amounts, and analyze credit patterns.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
@@ -38,28 +38,41 @@ export default function Hero() {
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <div className="h-full w-full bg-white p-6 overflow-y-auto" style={{ maxHeight: "100vh" }}>
+        <div
+          className="h-full w-full bg-white p-6 overflow-y-auto"
+          style={{ maxHeight: "100vh" }}
+        >
           <div className="flex flex-col space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-primary-50 p-4 rounded-lg shadow-sm">
-                <h3 className="text-lg font-bold text-primary-900">Total Credit</h3>
+                <h3 className="text-lg font-bold text-primary-900">
+                  Total Credit
+                </h3>
                 <p className="text-3xl font-bold text-primary-700">₹15.2M</p>
                 <p className="text-sm text-primary-600">+12% from last month</p>
               </div>
               <div className="bg-primary-50 p-4 rounded-lg shadow-sm">
-                <h3 className="text-lg font-semibold text-primary-900">Active Clients</h3>
+                <h3 className="text-lg font-semibold text-primary-900">
+                  Active Clients
+                </h3>
                 <p className="text-3xl font-bold text-primary-700">142</p>
                 <p className="text-sm text-primary-600">+8 new this month</p>
               </div>
             </div>
 
             <div className="bg-white rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900">Top Credit Holders</h3>
+              <h3 className="text-lg font-semibold mb-4 text-gray-900">
+                Top Credit Holders
+              </h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
                   <div>
-                    <p className="font-semibold text-gray-900">Rajesh Traders</p>
-                    <p className="text-sm text-gray-500">Last transaction: 2 days ago</p>
+                    <p className="font-semibold text-gray-900">
+                      Rajesh Traders
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Last transaction: 2 days ago
+                    </p>
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-primary-600">₹2.8M</p>
@@ -69,8 +82,12 @@ export default function Hero() {
 
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
                   <div>
-                    <p className="font-semibold text-gray-900">SK Enterprises</p>
-                    <p className="text-sm text-gray-500">Last transaction: Today</p>
+                    <p className="font-semibold text-gray-900">
+                      SK Enterprises
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Last transaction: Today
+                    </p>
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-primary-600">₹1.5M</p>
@@ -80,8 +97,12 @@ export default function Hero() {
 
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
                   <div>
-                    <p className="font-semibold text-gray-900">Metro Distributors</p>
-                    <p className="text-sm text-gray-500">Last transaction: 1 week ago</p>
+                    <p className="font-semibold text-gray-900">
+                      Metro Distributors
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Last transaction: 1 week ago
+                    </p>
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-primary-600">₹980K</p>
