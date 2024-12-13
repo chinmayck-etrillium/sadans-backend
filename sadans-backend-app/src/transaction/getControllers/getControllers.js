@@ -68,9 +68,39 @@ const showLastNTransaction = (req, res) => {
   });
 };
 
+const totalCredit = (req, res) => {
+  try {
+    pool.query(queries.totalCredit, (error, results) => {
+      if (error) {
+        return res.status(500).json({ message: "Internal server error!" });
+      } else if (results.rowCount < 1) {
+        return res.status(404).json({ message: "Not found!" });
+      } else {
+        return res.status(200).json(results.rows);
+      }
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    return res.status(500).json({ message: "Internal server error!" });
+  }
+};
+
+const highestCreditors = (req, res) => {
+  try {
+    pool.query(queries.highestCreditors, (error, results) => {
+      if (error) {
+        return res.status(500).json({ message: "Internal server error!" });
+      } else if (results.rowCount < 1) {
+        return res.status(404).json({ message: "Not found!" });
+      }
+    });
+  } catch (error) {}
+};
+
 module.exports = {
   getAllTransactions,
   getTransactionsByName,
   totalRemainingCredit,
   showLastNTransaction,
+  totalCredit,
 };

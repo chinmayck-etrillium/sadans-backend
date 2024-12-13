@@ -304,4 +304,6 @@ router.put("/created-at/:id", putController.editCreatedAtById);
 
 router.delete("/:id", deleteController.deleteTransactionById);
 
+router.get("/total/credit", getController.totalCredit);
+
 module.exports = router;
