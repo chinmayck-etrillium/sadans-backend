@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
+const cookieParser = require("cookie-parser");
 const clientRoutes = require("./src/client/routes");
 const transactionRoutes = require("./src/transaction/routes");
 const authRoutes = require("./src/auth/routes");
@@ -35,6 +36,7 @@ const specs = swaggerJsDoc(options);
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Don't forget to add middleware!");

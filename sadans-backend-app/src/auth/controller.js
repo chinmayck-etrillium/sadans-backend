@@ -63,6 +63,14 @@ const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    res.cookie("access_token", token, {
+      httpOnly: true, // Prevent access by JavaScript
+      secure: false, // Send only over HTTPS (set false for local testing)
+      sameSite: "Lax", // Protect against CSRF attacks
+    });
+
+    console.log("Cookie set:", res.getHeader("Set-Cookie"));
+
     return res
       .status(200)
       .json({ message: "Authenticated successfully!", token });
