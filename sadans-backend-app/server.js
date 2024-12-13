@@ -35,7 +35,10 @@ const options = {
 const specs = swaggerJsDoc(options);
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", 
+  credentials: true, // Allow credentials (cookies) to be sent
+}));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
@@ -48,5 +51,10 @@ app.use(auth.authUser);
 app.use("/api/v1/client", clientRoutes);
 app.use("/api/v1/transactions", transactionRoutes);
 app.use("/api/v1/export/csv", exportRoutes);
+
+app.options('*', cors({
+  origin: "http://localhost:5173", 
+  credentials: true, // Allow credentials (cookies) to be sent
+}));
 
 app.listen(Port, console.log(`Listening to port: ${Port}`));
