@@ -63,6 +63,14 @@ const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    res.cookie("access_token", token, {
+      httpOnly: true, // Prevent access by JavaScript
+      secure: false, // Send only over HTTPS (set false for local testing)
+      sameSite: "Lax", // Protect against CSRF attacks
+    });
+
+    console.log("Cookie set:", res.getHeader("Set-Cookie"));
+
     return res
       .status(200)
       .json({ message: "Authenticated successfully!", token });
@@ -72,7 +80,28 @@ const login = async (req, res) => {
   }
 };
 
+const tokenIsActive = (req, res) => {
+  const token = req.cookies.access_token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized access!" });
+  }
+  return res.status(200).json({ message: "Token is active!" });
+};
+
+const logout = (req, res) => {
+  const token = req.cookies.access_token;
+
+  if (!token) {
+    return res.status(404).json({ message: "Token not available!" });
+  }
+
+  res.clearCookie("access_token");
+  return res.status(200).json({ message: "Logged out successfully!" });
+};
 module.exports = {
   createUser,
   login,
+  tokenIsActive,
+  logout,
 };
