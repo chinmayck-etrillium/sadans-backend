@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthenticationContext } from "../../store/AuthenticationContext/AuthenticationContext";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
+  const { authenticate } = useContext(AuthenticationContext);
+
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,8 +22,14 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (credentials.username === "admin" && credentials.password === "password") {
-      localStorage.setItem("isAuthenticated", "true");
+
+    const response = await authenticate(
+      credentials.username,
+      credentials.password
+    );
+    console.log(response);
+
+    if (response.token) {
       navigate("/");
     } else {
       setError("Invalid username or password");
@@ -37,14 +47,22 @@ export default function Login() {
             Sign in to your account
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </div>
                 <div className="ml-3">
@@ -53,7 +71,7 @@ export default function Login() {
               </div>
             </div>
           )}
-          
+
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="username" className="sr-only">
@@ -114,4 +132,4 @@ export default function Login() {
       </div>
     </div>
   );
-} 
+}

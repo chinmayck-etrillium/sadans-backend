@@ -9,7 +9,7 @@ export default function GetClientNameContextProvider({ children }) {
   const getClientNames = async () => {
     try {
       const url = "http://localhost:3004/api/v1/client";
-      const response = await axios.get(url);
+      const response = await axios.get(url,{ withCredentials: true });
       return response;
     } catch (err) {
       console.log("Error: ", err);
