@@ -57,16 +57,25 @@ export default function NewTransaction() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    if (formData.type === "Repayment") {
+      formData.amount = formData.amount * -1;
+    }
+
+    console.log(formData);
+
     try {
       const url = `http://localhost:3004/api/v1/transactions/${formData.name}`;
       const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
+
       setStatus({
         message: "Transaction added successfully!",
-        type: "success"
+        type: "success",
       });
       // Reset form
       setFormData({ type: "Credit", name: formData.name });
@@ -75,7 +84,7 @@ export default function NewTransaction() {
       console.log("Error :", err);
       setStatus({
         message: "Failed to add transaction. Please try again.",
-        type: "error"
+        type: "error",
       });
     } finally {
       setIsLoading(false);
@@ -118,7 +127,9 @@ export default function NewTransaction() {
                       className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-primary-50"
                       onClick={() => handleClientClick(client)}
                     >
-                      <span className="block truncate">{client.client_name}</span>
+                      <span className="block truncate">
+                        {client.client_name}
+                      </span>
                     </li>
                   ))}
                 </ul>
