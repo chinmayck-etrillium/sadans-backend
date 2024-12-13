@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const authUser = (req, res, next) => {
   const token = req.cookies.access_token;
 
-  console.log(req.cookies)
+  console.log(req.cookies);
 
   try {
     if (!token) {
@@ -19,6 +19,7 @@ const authUser = (req, res, next) => {
     next();
   } catch (error) {
     console.error("Error: ", error);
+    res.clearCookie("access_token");
     return res.status(500).json({ message: "Invalid token!" });
   }
 };

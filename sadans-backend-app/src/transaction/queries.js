@@ -8,6 +8,13 @@ const totalRemainingCredit =
   "SELECT SUM(amount) FROM transaction WHERE transaction.client_id =$1 ";
 const showLastNTransaction =
   "SELECT * FROM transaction WHERE client_id = $1 ORDER BY created_at DESC LIMIT $2";
+const totalCredit = "SELECT SUM(amount) FROM transaction";
+const highestCreditors = `SELECT c.client_id, c.client_name, SUM(t.amount) AS total_transaction
+  FROM clients c
+  JOIN transaction t ON c.client_id = t.client_id
+  GROUP BY c.client_id, c.client_name
+  ORDER BY total_transaction DESC
+  LIMIT 3;`;
 
 //[POST]
 const addTransactionByName =
@@ -35,4 +42,6 @@ module.exports = {
   editNotesById,
   editTypeById,
   deleteTransactionById,
+  totalCredit,
+  highestCreditors,
 };
