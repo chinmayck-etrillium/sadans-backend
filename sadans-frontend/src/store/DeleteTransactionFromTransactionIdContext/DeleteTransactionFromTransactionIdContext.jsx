@@ -11,7 +11,7 @@ export default function DeleteTransactionFromTransactionIdContextProvider({
   const deleteFromTransactionId = async (id) => {
     const url = `http://localhost:3004/api/v1/transactions/${id}`;
     try {
-      const response = await axios.delete(url);
+      const response = await axios.delete(url, { withCredentials: true });
       return response;
     } catch (error) {
       console.log("Error: ", error);

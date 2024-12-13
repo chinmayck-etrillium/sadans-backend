@@ -10,22 +10,39 @@ import Login from "./components/Login/Login";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import GetLastNTransactionContextProvider from "./store/GetLastNTransactionContext/GetLastNTransactionContext";
 import GetClientIdFromNameContextProvider from "./store/GetClientIdFromNameContext/GetClientIdFromNameContext";
+import AuthenticationContextProvider from "./store/AuthenticationContext/AuthenticationContext";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <AuthenticationContextProvider>
+              <Login />
+            </AuthenticationContextProvider>
+          }
+        />
 
         <Route
           path="/"
           element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
+            <AuthenticationContextProvider>
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            </AuthenticationContextProvider>
           }
         >
-          <Route index element={<Home />} />
+          <Route
+            index
+            element={
+              <AuthenticationContextProvider>
+                <Home />
+              </AuthenticationContextProvider>
+            }
+          />
           <Route
             path="get-transaction"
             element={

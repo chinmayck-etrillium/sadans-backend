@@ -11,7 +11,7 @@ export default function GetClientIdFromNameContextProvider({ children }) {
     const url = `http://localhost:3004/api/v1/client/${clientName}`;
     try {
       console.log(url);
-      const response = await axios.get(url);
+      const response = await axios.get(url,{ withCredentials: true });
       console.log(response.data);
       return response;
     } catch (error) {

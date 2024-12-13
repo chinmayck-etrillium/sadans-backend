@@ -10,7 +10,7 @@ export default function GetLastNTransactionContextProvider({ children }) {
     console.log(id, limit);
     const url = `http://localhost:3004/api/v1/transactions/${id}/limit/${limit}`;
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url,{ withCredentials: true });
       return response;
     } catch (error) {}
   };
