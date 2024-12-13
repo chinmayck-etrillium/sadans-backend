@@ -1,6 +1,18 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getTotalCredit } from "../../store/ReduxStore/Transaction";
+import { formatCredit } from "../../util/util";
 
 export default function Hero() {
+  const dispatch = useDispatch();
+  const totalCredit = useSelector((state) => state.transaction.sum);
+
+  useEffect(() => {
+    dispatch(getTotalCredit());
+    console.log(totalCredit);
+  }, [dispatch]);
+
   return (
     <div className="relative bg-white overflow-hidden min-h-screen">
       <div className="max-w-7xl mx-auto">
@@ -48,7 +60,9 @@ export default function Hero() {
                 <h3 className="text-lg font-bold text-primary-900">
                   Total Credit
                 </h3>
-                <p className="text-3xl font-bold text-primary-700">₹15.2M</p>
+                <p className="text-3xl font-bold text-primary-700">
+                  {formatCredit(totalCredit)}
+                </p>
                 <p className="text-sm text-primary-600">+12% from last month</p>
               </div>
               <div className="bg-primary-50 p-4 rounded-lg shadow-sm">

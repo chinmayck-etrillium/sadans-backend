@@ -12,9 +12,12 @@ export default function ProtectedRoute({ children }) {
     async function authStatus() {
       try {
         const response = await authenticationStatus();
+        console.log("Inside effect", response);
         if (response) {
           console.log("Hi");
           navigate("/");
+        } else {
+          navigate("/login");
         }
       } catch (error) {
         navigate("/login");
