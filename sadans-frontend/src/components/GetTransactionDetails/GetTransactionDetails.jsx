@@ -16,6 +16,8 @@ export default function GetTransactionDetails() {
   const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [clicked, setClicked] = useState(false);
+  let amount = 0;
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -30,25 +32,28 @@ export default function GetTransactionDetails() {
   }, [getClientNames]);
 
   useEffect(() => {
+    console.log("Search Input:", clicked);
     if (searchInput.trim() === "") {
       setFilteredClients([]);
-    } else {
+    } else if (!clicked) {
       const filtered = clientName.filter((client) =>
         client.client_name.toLowerCase().includes(searchInput.toLowerCase())
       );
       setFilteredClients(filtered);
     }
+    setClicked(false);
   }, [searchInput, clientName]);
 
   const handleClientClick = (client) => {
     setSelectedClient(client);
     setSearchInput(client.client_name);
     setFilteredClients([]);
+    setClicked(true);
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!selectedClient || !numberOfTransactions) {
+    if (!selectedClient) {
       setError("Please select a client and enter number of transactions");
       return;
     }
@@ -56,14 +61,12 @@ export default function GetTransactionDetails() {
     setIsLoading(true);
     setError("");
     try {
-      console.log("selectedClient", selectedClient.client_name);
       const response = await getClientIdFromName(selectedClient.client_name);
-      console.log("selectedClient", response);
       const id = response.data[0].client_id;
 
       const transactionsResponse = await getLastNTransaction(
         id,
-        numberOfTransactions
+        numberOfTransactions || 100
       );
       setTransactions(transactionsResponse.data);
     } catch (error) {
@@ -72,6 +75,12 @@ export default function GetTransactionDetails() {
       setIsLoading(false);
     }
   };
+  if (transactions.length > 0) {
+    for (let i = 0; i < transactions.length; i++) {
+      amount = amount + parseFloat(transactions[i].amount);
+    }
+    console.log("Amount: ", amount);
+  }
 
   return (
     <div className="max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
@@ -204,76 +213,95 @@ export default function GetTransactionDetails() {
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                   <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table className="min-w-full divide-y divide-gray-300">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            ID
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Type
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Amount
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Notes
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Date
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200 bg-white">
-                        {transactions.map((transaction) => (
-                          <tr key={transaction.id}>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {transaction.id}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              <span
-                                className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                                  transaction.type.toLowerCase() === "credit"
-                                    ? "bg-green-100 text-green-800"
-                                    : "bg-red-100 text-red-800"
-                                }`}
-                              >
-                                {transaction.type}
-                              </span>
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              ₹{transaction.amount}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {transaction.notes}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {new Date(
-                                transaction.created_at
-                              ).toLocaleString()}
-                            </td>
+                    <div className="table-container">
+                      <table className="min-w-full divide-y divide-gray-300">
+                        <thead className="bg-gray-50 sticky top-0 z-10">
+                          <tr>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              ID
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Type
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Amount
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Notes
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            >
+                              Date
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white">
+                          {transactions.map((transaction) => (
+                            <tr key={transaction.id}>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {transaction.id}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <span
+                                  className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                                    transaction.type.toLowerCase() === "credit"
+                                      ? "bg-green-100 text-green-800"
+                                      : "bg-red-100 text-red-800"
+                                  }`}
+                                >
+                                  {transaction.type}
+                                </span>
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                ₹{transaction.amount}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {transaction.notes}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {new Date(
+                                  transaction.created_at
+                                ).toLocaleString()}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+          {/* Total Amount Display */}
+          {amount !== 0 && (
+            <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md shadow-md">
+              {amount > 0 && (
+                <h4 className="text-lg font-bold text-gray-800">
+                  Total Receivable:&nbsp;
+                  <span className="font-bold text-green-600">₹{amount}</span>
+                </h4>
+              )}
+              {amount < 0 && (
+                <h4 className="text-lg font-bold text-gray-800">
+                  Total Payable:&nbsp;
+                  <span className="font-bold text-red-600">₹{amount}</span>
+                </h4>
+              )}
             </div>
           )}
         </div>
