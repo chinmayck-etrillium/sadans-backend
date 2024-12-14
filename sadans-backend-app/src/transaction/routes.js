@@ -306,4 +306,6 @@ router.delete("/:id", deleteController.deleteTransactionById);
 
 router.get("/total/credit", getController.totalCredit);
 
+router.get("/highest/creditor", getController.highestCreditors);
+
 module.exports = router;

@@ -88,10 +88,13 @@ const totalCredit = (req, res) => {
 const highestCreditors = (req, res) => {
   try {
     pool.query(queries.highestCreditors, (error, results) => {
+      console.log("Highest")
       if (error) {
         return res.status(500).json({ message: "Internal server error!" });
       } else if (results.rowCount < 1) {
         return res.status(404).json({ message: "Not found!" });
+      } else {
+        return res.status(200).json(results.rows);
       }
     });
   } catch (error) {}
@@ -103,4 +106,5 @@ module.exports = {
   totalRemainingCredit,
   showLastNTransaction,
   totalCredit,
+  highestCreditors,
 };
