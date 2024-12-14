@@ -8,6 +8,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom scrollbar styles */
+.table-container {
+  @apply overflow-auto max-h-60; /* Tailwind classes for overflow and max height */
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the thumb on hover */
+}
+
+/* Custom scrollbar styles for Firefox */
+.table-container {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+}
+
 @layer components {
   .nav-link {
     @apply inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300;
