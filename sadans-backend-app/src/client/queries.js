@@ -9,6 +9,8 @@ const updateClientName =
   "UPDATE clients SET client_name = $1 WHERE client_id = $2";
 
 const deleteClient = "DELETE FROM clients WHERE client_id = $1";
+
+const totalClients = "SELECT COUNT(*) FROM clients";
 module.exports = {
   createClient,
   checkClientExists,
@@ -16,4 +18,5 @@ module.exports = {
   getClientIdByName,
   updateClientName,
   deleteClient,
+  totalClients,
 };

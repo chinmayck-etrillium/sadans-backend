@@ -9,12 +9,22 @@ const totalRemainingCredit =
 const showLastNTransaction =
   "SELECT * FROM transaction WHERE client_id = $1 ORDER BY created_at DESC LIMIT $2";
 const totalCredit = "SELECT SUM(amount) FROM transaction";
-const highestCreditors = `SELECT c.client_id, c.client_name, SUM(t.amount) AS total_transaction
-  FROM clients c
-  JOIN transaction t ON c.client_id = t.client_id
-  GROUP BY c.client_id, c.client_name
-  ORDER BY total_transaction DESC
-  LIMIT 3;`;
+const highestCreditors = `WITH TopClients AS (
+    SELECT c.client_id, c.client_name, SUM(t.amount) AS total_transaction
+    FROM clients c
+    JOIN transaction t ON c.client_id = t.client_id
+    GROUP BY c.client_id, c.client_name
+    ORDER BY total_transaction DESC
+    LIMIT 3
+)
+SELECT tc.client_id, 
+       tc.client_name, 
+       tc.total_transaction, 
+       MAX(t.created_at) AS latest_transaction_date
+FROM TopClients tc
+JOIN transaction t ON tc.client_id = t.client_id
+GROUP BY tc.client_id, tc.client_name, tc.total_transaction
+ORDER BY tc.total_transaction DESC;`;
 
 //[POST]
 const addTransactionByName =
