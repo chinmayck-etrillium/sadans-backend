@@ -3,6 +3,7 @@ import axios from "axios";
 
 const transactionInitialState = {
   sum: 0,
+  topThreeClients: [],
 };
 
 const transactionSlice = createSlice({
@@ -11,6 +12,10 @@ const transactionSlice = createSlice({
   reducers: {
     setTotalCredit(state, action) {
       state.sum = action.payload;
+    },
+
+    getTopClients(state, action) {
+      state.topThreeClients = action.payload;
     },
   },
 });
@@ -27,6 +32,24 @@ export const getTotalCredit = () => {
       .catch((error) => {
         console.error("Error fetching total credit:", error);
       });
+  };
+};
+
+export const getTopThreeClients = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3004/api/v1/transactions/highest/creditor",
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data) {
+        dispatch(transactionActions.getTopClients(response.data));
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   };
 };
 

@@ -1,16 +1,26 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getTotalCredit } from "../../store/ReduxStore/Transaction";
+import {
+  getTotalCredit,
+  getTopThreeClients,
+} from "../../store/ReduxStore/Transaction";
+import { formatDistanceToNow } from "date-fns";
 import { formatCredit } from "../../util/util";
+import { getTotalClients } from "../../store/ReduxStore/Clients";
 
 export default function Hero() {
   const dispatch = useDispatch();
   const totalCredit = useSelector((state) => state.transaction.sum);
+  const totalClients = useSelector((state) => state.clients.totalClients);
+  const topThreeClients = useSelector(
+    (state) => state.transaction.topThreeClients
+  );
 
   useEffect(() => {
     dispatch(getTotalCredit());
-    console.log(totalCredit);
+    dispatch(getTopThreeClients());
+    dispatch(getTotalClients());
   }, [dispatch]);
 
   return (
@@ -69,8 +79,10 @@ export default function Hero() {
                 <h3 className="text-lg font-semibold text-primary-900">
                   Active Clients
                 </h3>
-                <p className="text-3xl font-bold text-primary-700">142</p>
-                <p className="text-sm text-primary-600">+8 new this month</p>
+                <p className="text-3xl font-bold text-primary-700">
+                  {totalClients?.count  }
+                </p>
+                <p className="text-sm text-primary-600">+2 new this month</p>
               </div>
             </div>
 
@@ -78,52 +90,32 @@ export default function Hero() {
               <h3 className="text-lg font-semibold mb-4 text-gray-900">
                 Top Credit Holders
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      Rajesh Traders
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Last transaction: 2 days ago
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-primary-600">₹2.8M</p>
-                    <p className="text-sm text-gray-500">Outstanding</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      SK Enterprises
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Last transaction: Today
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-primary-600">₹1.5M</p>
-                    <p className="text-sm text-gray-500">Outstanding</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm">
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      Metro Distributors
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Last transaction: 1 week ago
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-primary-600">₹980K</p>
-                    <p className="text-sm text-gray-500">Outstanding</p>
-                  </div>
-                </div>
-              </div>
+              <ul className="space-y-4">
+                {topThreeClients.map((item, index) => (
+                  <li
+                    key={item.client_id}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm"
+                  >
+                    <div>
+                      <p className="font-semibold text-gray-900">
+                        {item.client_name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {`Last transaction: ${formatDistanceToNow(
+                          new Date(item.latest_transaction_date),
+                          { addSuffix: true }
+                        )}`}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-primary-600">
+                        {formatCredit(item.total_transaction)}
+                      </p>
+                      <p className="text-sm text-gray-500">Outstanding</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
