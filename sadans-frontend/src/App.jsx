@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import GetLastNTransactionContextProvider from "./store/GetLastNTransactionContext/GetLastNTransactionContext";
 import GetClientIdFromNameContextProvider from "./store/GetClientIdFromNameContext/GetClientIdFromNameContext";
 import AuthenticationContextProvider from "./store/AuthenticationContext/AuthenticationContext";
+import DeleteTransactionFromTransactionIdContextProvider from "./store/DeleteTransactionFromTransactionIdContext/DeleteTransactionFromTransactionIdContext";
 
 function App() {
   return (
@@ -64,7 +65,14 @@ function App() {
             }
           />
           <Route path="add-client" element={<AddNewClient />} />
-          <Route path="delete-transaction" element={<DeleteTransaction />} />
+          <Route
+            path="delete-transaction"
+            element={
+              <DeleteTransactionFromTransactionIdContextProvider>
+                <DeleteTransaction />
+              </DeleteTransactionFromTransactionIdContextProvider>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -19,7 +19,7 @@ export default function DeleteTransaction() {
     if (!transactionId) {
       setStatus({
         message: "Please enter a transaction ID",
-        type: "error"
+        type: "error",
       });
       return;
     }
@@ -27,16 +27,24 @@ export default function DeleteTransaction() {
     setIsLoading(true);
     try {
       const response = await deleteFromTransactionId(transactionId);
-      setStatus({
-        message: "Transaction deleted successfully!",
-        type: "success"
-      });
+      if (response.data) {
+        setStatus({
+          message: "Transaction deleted successfully!",
+          type: "success",
+        });
+      } else {
+        setStatus({
+          message: "Failed to delete transaction. Please try again.",
+          type: "error",
+        });
+      }
       setTransactionId("");
     } catch (error) {
       setStatus({
         message: "Failed to delete transaction. Please try again.",
-        type: "error"
+        type: "error",
       });
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
