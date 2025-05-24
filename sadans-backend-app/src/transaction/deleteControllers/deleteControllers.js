@@ -7,7 +7,11 @@ const deleteTransactionById = (req, res) => {
     if (error) {
       return res.status(500).send("Internal server error!");
     } else {
-      return res.status(200).send("Transaction deleted successfully");
+      if (results.rowCount > 0) {
+        return res.status(200).send("Transaction deleted successfully");
+      } else {
+        return res.status(404).send("Transaction not found!");
+      }
     }
   });
 };

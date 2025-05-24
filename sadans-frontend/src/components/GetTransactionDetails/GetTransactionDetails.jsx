@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { GetClientNameContext } from "../../store/GetClientNameContext/GetClientNameContext";
 import { GetClientIdFromNameContext } from "../../store/GetClientIdFromNameContext/GetClientIdFromNameContext";
 import { GetLastNTransactionContext } from "../../store/GetLastNTransactionContext/GetLastNTransactionContext";
@@ -17,7 +17,12 @@ export default function GetTransactionDetails() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [clicked, setClicked] = useState(false);
+  const focusRef = useRef(null);
   let amount = 0;
+
+  useEffect(() => {
+    focusRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -110,6 +115,7 @@ export default function GetTransactionDetails() {
                   className="form-input"
                   placeholder="Search clients..."
                   autoComplete="off"
+                  ref={focusRef}
                 />
                 {filteredClients.length > 0 && (
                   <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { DeleteTransactionFromTransactionIdContext } from "../../store/DeleteTransactionFromTransactionIdContext/DeleteTransactionFromTransactionIdContext";
 
 export default function DeleteTransaction() {
@@ -8,6 +8,11 @@ export default function DeleteTransaction() {
   const [transactionId, setTransactionId] = useState("");
   const [status, setStatus] = useState({ message: "", type: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const focusRef = useRef();
+
+  useEffect(() => {
+    focusRef.current?.focus();
+  }, []);
 
   const handleChange = (e) => {
     setTransactionId(e.target.value);
@@ -19,7 +24,7 @@ export default function DeleteTransaction() {
     if (!transactionId) {
       setStatus({
         message: "Please enter a transaction ID",
-        type: "error"
+        type: "error",
       });
       return;
     }
@@ -27,16 +32,24 @@ export default function DeleteTransaction() {
     setIsLoading(true);
     try {
       const response = await deleteFromTransactionId(transactionId);
-      setStatus({
-        message: "Transaction deleted successfully!",
-        type: "success"
-      });
+      if (response.data) {
+        setStatus({
+          message: "Transaction deleted successfully!",
+          type: "success",
+        });
+      } else {
+        setStatus({
+          message: "Failed to delete transaction. Please try again.",
+          type: "error",
+        });
+      }
       setTransactionId("");
     } catch (error) {
       setStatus({
         message: "Failed to delete transaction. Please try again.",
-        type: "error"
+        type: "error",
       });
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -69,6 +82,7 @@ export default function DeleteTransaction() {
                 placeholder="Enter transaction ID"
                 min="1"
                 required
+                ref={focusRef}
               />
             </div>
 

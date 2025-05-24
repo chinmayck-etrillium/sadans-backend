@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function AddNewClient() {
   const [formData, setFormData] = useState({
@@ -9,6 +9,11 @@ export default function AddNewClient() {
   });
   const [dbUpdated, setDbUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const focusRef = useRef();
+
+  useEffect(() => {
+    focusRef.current?.focus();
+  }, []);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -69,6 +74,7 @@ export default function AddNewClient() {
               onChange={handleChange}
               className="form-input"
               required
+              ref={focusRef}
             />
           </div>
 
