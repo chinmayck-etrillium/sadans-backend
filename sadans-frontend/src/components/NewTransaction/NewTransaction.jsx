@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { GetClientNameContext } from "../../store/GetClientNameContext/GetClientNameContext";
 
@@ -11,6 +11,11 @@ export default function NewTransaction() {
   const [filteredClients, setFilteredClients] = useState([]);
   const [flag, setFlag] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const focusRef = useRef();
+
+  useEffect(() => {
+    focusRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const getNamesFromContext = async () => {
@@ -118,6 +123,7 @@ export default function NewTransaction() {
                 className="form-input"
                 placeholder="Search clients..."
                 autoComplete="off"
+                ref={focusRef}
               />
               {filteredClients.length > 0 && (
                 <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
