@@ -1,0 +1,52 @@
+/* Modal.css */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* This is the dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    z-index: 1001;
+    /* ensure it's above backdrop */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+.modal-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.modal-button.yes {
+    background-color: #0056b3;
+    color: white;
+}
+
+.modal-button.close {
+    background-color: #ed5449;
+    color: white;
+}

@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { DeleteTransactionFromTransactionIdContext } from "../../store/DeleteTransactionFromTransactionIdContext/DeleteTransactionFromTransactionIdContext";
+import Modal from "../Modal/Modal";
 
 export default function DeleteTransaction() {
   const { deleteFromTransactionId } = useContext(
@@ -8,6 +9,7 @@ export default function DeleteTransaction() {
   const [transactionId, setTransactionId] = useState("");
   const [status, setStatus] = useState({ message: "", type: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [modalStatus, setModalStatus] = useState(false);
   const focusRef = useRef();
 
   useEffect(() => {
@@ -21,6 +23,42 @@ export default function DeleteTransaction() {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    setModalStatus((prev) => !prev);
+    // if (!transactionId) {
+    //   setStatus({
+    //     message: "Please enter a transaction ID",
+    //     type: "error",
+    //   });
+    //   return;
+    // }
+
+    // setIsLoading(true);
+    // try {
+    //   const response = await deleteFromTransactionId(transactionId);
+    //   if (response.data) {
+    //     setStatus({
+    //       message: "Transaction deleted successfully!",
+    //       type: "success",
+    //     });
+    //   } else {
+    //     setStatus({
+    //       message: "Failed to delete transaction. Please try again.",
+    //       type: "error",
+    //     });
+    //   }
+    //   setTransactionId("");
+    // } catch (error) {
+    //   setStatus({
+    //     message: "Failed to delete transaction. Please try again.",
+    //     type: "error",
+    //   });
+    //   console.log(error);
+    // } finally {
+    //   setIsLoading(false);
+    // }
+  };
+
+  const handleYes = async () => {
     if (!transactionId) {
       setStatus({
         message: "Please enter a transaction ID",
@@ -52,6 +90,7 @@ export default function DeleteTransaction() {
       console.log(error);
     } finally {
       setIsLoading(false);
+      setModalStatus(false);
     }
   };
 
@@ -135,6 +174,13 @@ export default function DeleteTransaction() {
             </button>
           </div>
         </form>
+        <Modal
+          isOpen={modalStatus}
+          onClose={() => setModalStatus(false)}
+          onYes={() => handleYes()}
+        >
+          <p>Are you sure you want to delete?</p>
+        </Modal>
       </div>
     </div>
   );
