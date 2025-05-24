@@ -25,6 +25,18 @@ FROM TopClients tc
 JOIN transaction t ON tc.client_id = t.client_id
 GROUP BY tc.client_id, tc.client_name, tc.total_transaction
 ORDER BY tc.total_transaction DESC;`;
+const getTransactionsDetailById = `SELECT 
+      c.client_name,
+      t.amount,
+	    t.notes,
+	    t.created_at
+	
+FROM 
+    "transaction" t
+JOIN 
+    clients c ON t.client_id = c.client_id
+WHERE 
+    t.id = $1;`;
 
 //[POST]
 const addTransactionByName =
@@ -54,4 +66,5 @@ module.exports = {
   deleteTransactionById,
   totalCredit,
   highestCreditors,
+  getTransactionsDetailById,
 };

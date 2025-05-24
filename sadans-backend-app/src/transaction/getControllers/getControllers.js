@@ -88,7 +88,6 @@ const totalCredit = (req, res) => {
 const highestCreditors = (req, res) => {
   try {
     pool.query(queries.highestCreditors, (error, results) => {
-      console.log("Highest")
       if (error) {
         return res.status(500).json({ message: "Internal server error!" });
       } else if (results.rowCount < 1) {
@@ -100,6 +99,27 @@ const highestCreditors = (req, res) => {
   } catch (error) {}
 };
 
+const getTransactionsDetailById = (req, res) => {
+  const transactionId = req.params.id;
+  try {
+    pool.query(
+      queries.getTransactionsDetailById,
+      [transactionId],
+      (error, results) => {
+        if (error) {
+          return res
+            .status(500)
+            .json({ message: "Internal server error!", error });
+        } else if (results.rowCount > 0) {
+          return res.status(200).json(results.rows);
+        } else {
+          return res.status(404).json({ message: "Not found!" });
+        }
+      }
+    );
+  } catch (error) {}
+};
+
 module.exports = {
   getAllTransactions,
   getTransactionsByName,
@@ -107,4 +127,5 @@ module.exports = {
   showLastNTransaction,
   totalCredit,
   highestCreditors,
+  getTransactionsDetailById,
 };

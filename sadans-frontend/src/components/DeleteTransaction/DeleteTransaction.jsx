@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { DeleteTransactionFromTransactionIdContext } from "../../store/DeleteTransactionFromTransactionIdContext/DeleteTransactionFromTransactionIdContext";
 import Modal from "../Modal/Modal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 export default function DeleteTransaction() {
   const { deleteFromTransactionId } = useContext(
@@ -24,38 +25,6 @@ export default function DeleteTransaction() {
   const handleClick = async (e) => {
     e.preventDefault();
     setModalStatus((prev) => !prev);
-    // if (!transactionId) {
-    //   setStatus({
-    //     message: "Please enter a transaction ID",
-    //     type: "error",
-    //   });
-    //   return;
-    // }
-
-    // setIsLoading(true);
-    // try {
-    //   const response = await deleteFromTransactionId(transactionId);
-    //   if (response.data) {
-    //     setStatus({
-    //       message: "Transaction deleted successfully!",
-    //       type: "success",
-    //     });
-    //   } else {
-    //     setStatus({
-    //       message: "Failed to delete transaction. Please try again.",
-    //       type: "error",
-    //     });
-    //   }
-    //   setTransactionId("");
-    // } catch (error) {
-    //   setStatus({
-    //     message: "Failed to delete transaction. Please try again.",
-    //     type: "error",
-    //   });
-    //   console.log(error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
   };
 
   const handleYes = async () => {
@@ -179,7 +148,11 @@ export default function DeleteTransaction() {
           onClose={() => setModalStatus(false)}
           onYes={() => handleYes()}
         >
-          <p>Are you sure you want to delete?</p>
+          {modalStatus && (
+            <div>
+              <DeleteModal transactionId={transactionId} />
+            </div>
+          )}
         </Modal>
       </div>
     </div>

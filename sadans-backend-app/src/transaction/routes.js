@@ -308,4 +308,6 @@ router.get("/total/credit", getController.totalCredit);
 
 router.get("/highest/creditor", getController.highestCreditors);
 
+router.get("/detail/:id", getController.getTransactionsDetailById);
+
 module.exports = router;
