@@ -37,12 +37,11 @@ export default function GetTransactionDetails() {
   }, [getClientNames]);
 
   useEffect(() => {
-    console.log("Search Input:", clicked);
     if (searchInput.trim() === "") {
       setFilteredClients([]);
     } else if (!clicked) {
       const filtered = clientName.filter((client) =>
-        client.client_name.toLowerCase().includes(searchInput.toLowerCase())
+        client.client_name.toLowerCase().startsWith(searchInput.toLowerCase())
       );
       setFilteredClients(filtered);
     }

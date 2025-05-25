@@ -37,12 +37,13 @@ export default function GetCompleteClientDetails() {
       setFilteredClients([]);
     } else if (!clicked) {
       const filtered = clientName.filter((client) =>
-        client.client_name.toLowerCase().includes(searchInput.toLowerCase())
+        client.client_name.toLowerCase().startsWith(searchInput.toLowerCase())
       );
       setFilteredClients(filtered);
     }
     setClicked(false);
   }, [searchInput, clientName]);
+  
 
   useEffect(() => {
     const getClientDetails = async () => {
