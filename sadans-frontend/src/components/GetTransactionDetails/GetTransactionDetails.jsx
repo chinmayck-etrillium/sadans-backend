@@ -89,7 +89,7 @@ export default function GetTransactionDetails() {
 
   return (
     <div className="max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
-      <div className="card">
+      <div >
         <div className="card-header">
           <h3 className="text-lg font-medium leading-6 text-gray-900">
             Transaction History

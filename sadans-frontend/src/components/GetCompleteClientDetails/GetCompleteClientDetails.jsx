@@ -14,6 +14,7 @@ export default function GetCompleteClientDetails() {
   const [error, setError] = useState("");
   const [clicked, setClicked] = useState(false);
   const focusRef = useRef(null);
+  const [netAmount, setNetAmount] = useState(0);
 
   useEffect(() => {
     focusRef.current?.focus();
@@ -45,7 +46,6 @@ export default function GetCompleteClientDetails() {
 
   useEffect(() => {
     const getClientDetails = async () => {
-      console.log("Client Details");
       try {
         const response = await axios.get(
           `http://localhost:3004/api/v1/client/details/${selectedClient}`,
@@ -55,17 +55,30 @@ export default function GetCompleteClientDetails() {
         setClientDetails(responseData.reverse());
       } catch (error) {
         setError("Failed to fetch client details");
-        console.error("Error fetching client details:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
     if (clicked) {
-      console.log("Clicked");
       getClientDetails();
     }
   }, [clicked]);
+
+  useEffect(() => {
+    const getNetAmount = () => {
+      if (clientDetails.length > 0) {
+        let amt = 0;
+        for (let i = 0; i < clientDetails.length; i++) {
+          amt += parseInt(clientDetails[i].amount);
+        }
+        setNetAmount(amt);
+      }
+    };
+    if (clientDetails) {
+      getNetAmount();
+    }
+  }, [clientDetails]);
 
   const handleClientClick = async (client) => {
     setSelectedClient(client.client_name);
@@ -191,6 +204,18 @@ export default function GetCompleteClientDetails() {
                         {clientDetails[0].client_id}
                       </p>
                     </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Address</p>
+                      <p className="font-medium">
+                        {clientDetails[0].client_address}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Mobile</p>
+                      <p className="font-medium">
+                        {clientDetails[0].phone_number}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -244,6 +269,25 @@ export default function GetCompleteClientDetails() {
                       </table>
                     </div>
                   </div>
+                </div>
+                {/* Net Amount Display */}
+                <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md shadow-md">
+                  {netAmount > 0 && (
+                    <h4 className="text-lg font-bold text-gray-800">
+                      Total Receivable:&nbsp;
+                      <span className="font-bold text-green-600">
+                        {formatCredit(netAmount)}
+                      </span>
+                    </h4>
+                  )}
+                  {netAmount < 0 && (
+                    <h4 className="text-lg font-bold text-gray-800">
+                      Total Payable:&nbsp;
+                      <span className="font-bold text-red-600">
+                        {formatCredit(netAmount)}
+                      </span>
+                    </h4>
+                  )}
                 </div>
               </div>
             )}
