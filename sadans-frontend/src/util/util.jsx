@@ -1,8 +1,22 @@
 export function formatCredit(amount) {
-  if (amount >= 10000000) {
-    return `${(amount / 10000000).toFixed(1)}C`; // For millions, show one decimal
-  } else if (amount >= 100000) {
-    return `${(amount / 100000).toFixed(1)}L`; // For lakhs, show one decimal
+  const absAmount = Math.abs(amount);
+  let formatted = '';
+
+  if (absAmount >= 10000000) {
+    formatted = `${(absAmount / 10000000).toFixed(2)}C`; // Crores
+  } else if (absAmount >= 100000) {
+    formatted = `${(absAmount / 100000).toFixed(2)}L`; // Lakhs
+  } else {
+    formatted = `₹${absAmount.toLocaleString('en-IN')}`; // Indian number format
   }
-  return `₹${amount}`; // For amounts less than 100,000
+
+  return amount < 0 ? `- ${formatted}` : formatted;
+}
+
+
+export function formatDate(dateString) {
+  return new Date(dateString).toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }

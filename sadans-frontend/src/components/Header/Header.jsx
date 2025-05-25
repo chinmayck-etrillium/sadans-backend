@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-export default function Header({ isMobileMenuOpen, setIsMobileMenuOpen, handleLogout }) {
+export default function Header({
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+  handleLogout,
+}) {
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,6 +33,9 @@ export default function Header({ isMobileMenuOpen, setIsMobileMenuOpen, handleLo
               </Link>
               <Link to="/add-client" className="nav-link">
                 Add Client
+              </Link>
+              <Link to="/complete-client-details" className="nav-link">
+                Client Info
               </Link>
             </div>
           </div>
@@ -71,7 +78,7 @@ export default function Header({ isMobileMenuOpen, setIsMobileMenuOpen, handleLo
       </div>
 
       {/* Mobile menu */}
-      <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
+      <div className={`${isMobileMenuOpen ? "block" : "hidden"} sm:hidden`}>
         <div className="pt-2 pb-3 space-y-1">
           <Link
             to="/"

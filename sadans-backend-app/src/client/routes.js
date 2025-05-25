@@ -8,5 +8,6 @@ router.post("/", controller.createClient);
 router.put("/:name", controller.updateClientName);
 router.delete("/", controller.deleteClient);
 router.get("/total/clients", controller.totalClients);
+router.get("/details/:name", controller.getCompleteClientDetails);
 
 module.exports = router;

@@ -12,6 +12,7 @@ import GetLastNTransactionContextProvider from "./store/GetLastNTransactionConte
 import GetClientIdFromNameContextProvider from "./store/GetClientIdFromNameContext/GetClientIdFromNameContext";
 import AuthenticationContextProvider from "./store/AuthenticationContext/AuthenticationContext";
 import DeleteTransactionFromTransactionIdContextProvider from "./store/DeleteTransactionFromTransactionIdContext/DeleteTransactionFromTransactionIdContext";
+import GetCompleteClientDetails from "./components/GetCompleteClientDetails/GetCompleteClientDetails";
 
 function App() {
   return (
@@ -71,6 +72,14 @@ function App() {
               <DeleteTransactionFromTransactionIdContextProvider>
                 <DeleteTransaction />
               </DeleteTransactionFromTransactionIdContextProvider>
+            }
+          />
+          <Route
+            path="complete-client-details"
+            element={
+              <GetClientNameContextProvider>
+                <GetCompleteClientDetails />
+              </GetClientNameContextProvider>
             }
           />
         </Route>

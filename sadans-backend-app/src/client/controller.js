@@ -122,6 +122,29 @@ const totalClients = (req, res) => {
   }
 };
 
+const getCompleteClientDetails = (req, res) => {
+  const name = req.params.name;
+  if (name) {
+    try {
+      pool.query(queries.getCompleteClientDetails, [name], (error, results) => {
+        if (error) {
+          console.log(error)
+          return res.status(500).json({ message: "Internal server error!" });
+        } else if (results.rowCount < 1) {
+          return res.status(404).json({ message: "Not Found!" });
+        } else {
+          return res.status(200).json(results.rows);
+        }
+      });
+    } catch (error) {
+      console.error("Error: ", error);
+      return res.status(500).json({ message: "Internal server error!" });
+    }
+  } else {
+    return res.status(500).json({ message: "Internal server error!" });
+  }
+};
+
 module.exports = {
   getAllClients,
   getClientIdByName,
@@ -129,4 +152,5 @@ module.exports = {
   updateClientName,
   deleteClient,
   totalClients,
+  getCompleteClientDetails,
 };
